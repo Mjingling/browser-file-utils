@@ -1,6 +1,6 @@
 {
   "name": "browser-file-utils",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "A browser file utils",
   "main": "./dist/file-utils.js",
   "scripts": {
@@ -12,7 +12,13 @@
     "type": "git",
     "url": "https://github.com/Mjingling/browser-file-utils.git"
   },
-  "keywords": ["file utils", "file", "browser", "base64", "blob"],
+  "keywords": [
+    "file utils",
+    "file",
+    "browser",
+    "base64",
+    "blob"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
