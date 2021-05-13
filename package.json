@@ -1,7 +1,7 @@
 {
   "name": "browser-file-utils",
-  "version": "0.1.5",
-  "description": "",
+  "version": "0.1.8",
+  "description": "A browser file utils",
   "main": "./dist/file-utils.js",
   "scripts": {
     "dev": "webpack-dev-server",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://172.20.10.91/xinxian_mu/cf-auto-login.git"
+    "url": "https://github.com/Mjingling/browser-file-utils.git"
   },
   "keywords": [],
   "author": "",

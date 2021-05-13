@@ -1,24 +1,9 @@
 const isNumber = val => typeof val === 'number' && val === val;
 /**
-  * 检查文件类型是否合法
-  * @param accept
-  * @param fileMime
-  * @return {boolean}
-  */
-export function checkFileType (accept, fileMime) {
-    if (!accept || !fileMime || accept === '*') return true
-    let fileTypes = fileMime.split('/')
-    return accept.split(',').some(mime => {
-        let types = mime.split('/')
-        return types[0] === fileTypes[0] && (types[1] === '*' || fileTypes[1] === types[1])
-    })
-}
-
-/**
  * 获取无后缀的文件名
  * @param {*} fileName
  */
-export function getNoSuffixFileName (fileName) {
+export function getNoSuffixFileName(fileName) {
     let lastIdx = -1
     // 文件名不合法或本身无后缀时，直接返回本身
     if (!fileName || (lastIdx = fileName.lastIndexOf('.')) < 0) {
@@ -31,7 +16,7 @@ export function getNoSuffixFileName (fileName) {
  * 获取指定文件名的后缀
  * @param {string}} fileName
  */
-export function getFileNameSuffix (fileName) {
+export function getFileNameSuffix(fileName) {
     let lastIdx = -1
     // 文件名不合法或本身无后缀时，直接返回本身
     if (!fileName || (lastIdx = fileName.lastIndexOf('.')) < 0) {
@@ -45,7 +30,7 @@ export function getFileNameSuffix (fileName) {
  * @param {*} fileName 文件全名称
  * @returns {String}
  */
-export function getFileNamePrefix (fileName) {
+export function getFileNamePrefix(fileName) {
     if (fileName) {
         let idx = fileName.lastIndexOf('.')
         return idx !== -1 ? fileName.substring(0, idx) : fileName
@@ -57,7 +42,7 @@ export function getFileNamePrefix (fileName) {
  * 获取文件的大小 1.1MB
  * @param {string}} size
  */
-export function countMB (size) {
+export function countMB(size) {
     const sizeNum = parseFloat(size)
     if (sizeNum === 0 || !isNumber(sizeNum) || Number.isNaN(sizeNum)) return '0 B'
     const k = 1024 // or 1024
@@ -90,7 +75,7 @@ export const isImg = (fileName = '') => {
  */
 export const base64ToBlob = (data) => {
     let base64Arr = data.split(',')
-    let imgType = base64Arr[0].match(/:(.*?);/)[1]
+    let type = base64Arr[0].match(/:(.*?);/)[1]
     let base64String = base64Arr[1]
     // 将base64解码
     var bytes = atob(base64String)
@@ -105,7 +90,9 @@ export const base64ToBlob = (data) => {
     }
 
     // 生成Blob对象（文件对象）
-    return new Blob([bytesCode], { type: imgType })
+    return new Blob([bytesCode], {
+        type: type
+    })
 }
 
 export const download = (fileName, url) => {
@@ -144,10 +131,89 @@ export const downloadWithIFrame = (url, props) => {
     el.src = url
 }
 
+/**
+ * @desc 更改文件后缀名为指定的后缀
+ * @params filename {String}
+ * @params ext {String}
+ */
+export const changeExt = (filename = '', ext = "") => {
+    if (!ext || ext === '') return filename
+    let tempArr = filename.split('.').reverse()
+    tempArr[0] = ext
+    return tempArr.reverse().join('.')
+}
+
+/**
+ * @desc 将图片转为base64
+ * @params {element} img 图片对象
+ */
+export const image2Base64 = (img) => {
+    var canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0, img.width, img.height);
+    var dataURL = canvas.toDataURL("image/png");
+    return dataURL;
+}
+
+/**
+ * @desc 获取图片的base64编码
+ * @params {element} img 图片对象
+ * @params {function} cb 回调函数
+ */
+export const getImgBase64 = (imgUrl, cb) => {
+    var base64 = "";
+    var img = new Image();
+    img.src = imgUrl;
+    img.onload = function () {
+        base64 = image2Base64(img);
+        cb(base64)
+    }
+}
+
+/**
+ * @desc 将blob对象转为file对象
+ * @params {blob} blob blob对象
+ * @params {String} fileName 文件名
+ */
+export const blob2File = (blob, fileName) => {
+    let fileExt = getFileNameSuffix(fileName)
+    return new window.File([blob], fileName, {type: `image/${fileExt}`})
+}
+
+/**
+ * @desc 将image file对象转为base64
+ * @params {ImageFile} file 从文件域中获取到的图片文件对象
+ * @params {function} cb 回调函数
+ */
+export const imageFileToBase64 = (file, cb) => {
+    var reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = () => {
+        cb({
+            error: null,
+            data: reader.result
+        })
+    }
+    reader.onerror = function (error) {
+        cb({
+            error: error,
+            data: reader.result
+        })
+    }
+}
+
 export default {
     getNoSuffixFileName,
     getFileNameSuffix,
     getFileNamePrefix,
     countMB,
     isImg,
+    downloadWithIFrame,
+    base64ToBlob,
+    changeExt,
+    image2Base64,
+    getImgBase64,
+    imageFileToBase64,
 }
