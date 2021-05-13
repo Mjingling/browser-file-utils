@@ -162,7 +162,7 @@ getImgBase64('./demo/WX20210513-091307.png', (imgBase64) => {
 })
 ```
 
-> 通过input文件域获取到的图片file对象转为base64
+> 下载文件到本地
 
 ```JavaScript
 import {
