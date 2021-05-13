@@ -23,3 +23,6 @@
 //         console.log(stdout)
 //     });
 // });
+
+// 废弃版本
+// npm deprecate browser-file-utils@0.1.2 'not correctly work '
