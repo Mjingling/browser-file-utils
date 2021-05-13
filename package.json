@@ -1,6 +1,6 @@
 {
   "name": "browser-file-utils",
-  "version": "0.1.34",
+  "version": "0.1.35",
   "description": "A browser file utils",
   "main": "./dist/file-utils.js",
   "scripts": {
