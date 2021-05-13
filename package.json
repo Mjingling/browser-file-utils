@@ -1,11 +1,11 @@
 {
   "name": "browser-file-utils",
-  "version": "0.1.16",
+  "version": "0.1.15",
   "description": "A browser file utils",
   "main": "./dist/file-utils.js",
   "scripts": {
     "dev": "webpack-dev-server",
-    "publish": "node publish.js",
+    "pub": "node publish.js",
     "build": "cross-env NODE_ENV=production webpack"
   },
   "repository": {
