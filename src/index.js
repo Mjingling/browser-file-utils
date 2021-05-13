@@ -3,7 +3,7 @@ const isNumber = val => typeof val === 'number' && val === val;
  * 获取无后缀的文件名
  * @param {*} fileName
  */
-export function getNoSuffixFileName(fileName) {
+export function getBaseName(fileName) {
     let lastIdx = -1
     // 文件名不合法或本身无后缀时，直接返回本身
     if (!fileName || (lastIdx = fileName.lastIndexOf('.')) < 0) {
@@ -16,26 +16,13 @@ export function getNoSuffixFileName(fileName) {
  * 获取指定文件名的后缀
  * @param {string}} fileName
  */
-export function getFileNameSuffix(fileName) {
+export function getExtension(fileName) {
     let lastIdx = -1
     // 文件名不合法或本身无后缀时，直接返回本身
     if (!fileName || (lastIdx = fileName.lastIndexOf('.')) < 0) {
         return fileName
     }
     return fileName.substring(lastIdx + 1)
-}
-
-/**
- * 获取文件前缀名
- * @param {*} fileName 文件全名称
- * @returns {String}
- */
-export function getFileNamePrefix(fileName) {
-    if (fileName) {
-        let idx = fileName.lastIndexOf('.')
-        return idx !== -1 ? fileName.substring(0, idx) : fileName
-    }
-    return ''
 }
 
 /**
@@ -60,8 +47,8 @@ export function countMB(size) {
  * @param {*} fileName 文件全名称
  * @returns {Boolean}
  */
-export const isImg = (fileName = '') => {
-    let fileExt = getFileNameSuffix(fileName)
+export const isImage = (fileName = '') => {
+    let fileExt = getExtension(fileName)
     if (!fileExt) return false
     const imgType = ['jpg', 'jpeg', 'png', 'bmp', 'gif']
     return (imgType.indexOf(fileExt.toLowerCase()) > -1)
@@ -95,7 +82,7 @@ export const base64ToBlob = (data) => {
     })
 }
 
-export const download = (fileName, url) => {
+export const downloadFile = (fileName, url) => {
     let link = document.createElement('a')
     if ('download' in link) {
         link.href = url
@@ -120,7 +107,7 @@ export const download = (fileName, url) => {
  * 使用iframe实现文件下载
  * @param url
  */
-export const downloadWithIFrame = (url, props) => {
+export const downloadWithIFrame = (url) => {
     let el = document.querySelector('#download-iframe')
     if (!el) {
         el = document.createElement('iframe')
@@ -178,7 +165,7 @@ export const getImgBase64 = (imgUrl, cb) => {
  * @params {String} fileName 文件名
  */
 export const blob2File = (blob, fileName) => {
-    let fileExt = getFileNameSuffix(fileName)
+    let fileExt = getExtension(fileName)
     return new window.File([blob], fileName, {type: `image/${fileExt}`})
 }
 
@@ -205,15 +192,15 @@ export const imageFileToBase64 = (file, cb) => {
 }
 
 export default {
-    getNoSuffixFileName,
-    getFileNameSuffix,
-    getFileNamePrefix,
+    getBaseName,
+    getExtension,
     countMB,
-    isImg,
-    downloadWithIFrame,
+    isImage,
     base64ToBlob,
     changeExt,
     image2Base64,
     getImgBase64,
     imageFileToBase64,
+    downloadFile,
+    downloadWithIFrame,
 }

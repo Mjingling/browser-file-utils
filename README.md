@@ -24,7 +24,7 @@ import fileUtils from 'browser-file-utils'
 or 
 
 import {
-    getNoSuffixFileName,
+    getBaseName,
 } from 'browser-file-utils'
 ```
 
@@ -32,28 +32,28 @@ import {
 
 ```JavaScript
 import {
-    getNoSuffixFileName,
+    getBaseName,
 } from 'browser-file-utils'
-console.log(getNoSuffixFileName('user-avater.png')) // user-avater
-console.log(getNoSuffixFileName('user-avater.jpg.png')) // user-avater.jpg
+console.log(getBaseName('user-avater.png')) // user-avater
+console.log(getBaseName('user-avater.jpg.png')) // user-avater.jpg
 ```
 > 获取文件名的后缀名
 
 ```JavaScript
 import {
-    getFileNameSuffix,
+    getExtension,
 } from 'browser-file-utils'
-console.log(getFileNameSuffix('user-record-list.docx')) // docx
+console.log(getExtension('user-record-list.docx')) // docx
 ```
 
 > 判断文件是否为图片
 
 ```JavaScript
 import {
-    isImg,
+    isImage,
 } from 'browser-file-utils'
-console.log(isImg('a.b.c.docx')) // false
-console.log(isImg('user-avater.png')) // true
+console.log(isImage('a.b.c.docx')) // false
+console.log(isImage('user-avater.png')) // true
 ```
 
 > 计算文件大小
@@ -94,18 +94,6 @@ import {
 
 getImgBase64('./demo/WX20210513-091307.png', (imgBase64) => {
     console.log(imgBase64)
-    // base64转换为 blob对象
-    let imageBlob = base64ToBlob(imgBase64)
-    console.log(imageBlob)
-    // 将blob对象转为file对象
-    let fileObject = blob2File(imageBlob, 'test.png')
-    console.log(fileObject)
-    // 将一个image file对象转为base64
-    imageFileToBase64(fileObject, (res) => {
-        let imgTag = document.createElement('img')
-        imgTag.src = res.data
-        document.body.appendChild(imgTag)
-    })
 })
 ```
 
@@ -172,4 +160,15 @@ getImgBase64('./demo/WX20210513-091307.png', (imgBase64) => {
         document.body.appendChild(imgTag)
     })
 })
+```
+
+> 通过input文件域获取到的图片file对象转为base64
+
+```JavaScript
+import {
+    downloadFile
+} from 'browser-file-utils'
+
+downloadFile('tt.txt', 'http://127.0.0.1:8080/demo/tt.txt')
+downloadFile('WX20210513-091307.png', 'http://127.0.0.1:8080/demo/WX20210513-091307.png')
 ```
