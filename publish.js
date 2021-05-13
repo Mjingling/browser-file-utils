@@ -8,9 +8,14 @@ var process = require('child_process');
 
 // 发布大版本
 // npm version major
-process.exec('npm version patch && npm publish',function (error, stdout, stderr) {
+process.exec('npm version patch',function (error, stdout, stderr) {
     if (error !== null) {
         console.log('exec error: ' + error);
     }
-    console.log(stdout)
+    process.exec('npm publish',function (error, stdout, stderr) {
+        if (error !== null) {
+            console.log('exec error: ' + error);
+        }
+        console.log(stdout)
+    });
 });
