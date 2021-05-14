@@ -19,6 +19,9 @@
     "base64",
     "blob"
   ],
+  "files":[
+    "dist/*.js"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {},
