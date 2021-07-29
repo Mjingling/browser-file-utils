@@ -168,7 +168,12 @@ getImgBase64('./demo/WX20210513-091307.png', (imgBase64) => {
 import {
     downloadFile
 } from 'browser-file-utils'
-
-downloadFile('tt.txt', 'http://127.0.0.1:8080/demo/tt.txt')
+// 下载时指定文件名
+/**
+ * @params fileName 可与真实文件名不一样
+ * @params url 下载地址
+ * 
+*/
+downloadFile('tt111.txt', 'http://127.0.0.1:8080/demo/tt.txt')
 downloadFile('WX20210513-091307.png', 'http://127.0.0.1:8080/demo/WX20210513-091307.png')
 ```
